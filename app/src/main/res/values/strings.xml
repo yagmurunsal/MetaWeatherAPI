@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">CaseSolution</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <string name="search_location_fragment_label">Search Location Fragment</string>
+    <string name="location_info_fragment_label">Location Info Fragment</string>
+    <string name="past_location_info_fragment_label">Past Location Info Fragment</string>
+
+    <string name="hint_enter_city_name">Enter city name</string>
+
+    <string name="the_temp_second_fragment">%1$d°C</string>
+    <string name="min_temp_second_fragment">%1$d°</string>
+    <string name="wind_format_second_fragment">%1$s %2$d mph</string>
+    <string name="humidity_format_second_fragment">%1$d%%</string>
+    <string name="visibility_format_second_fragment">%1$.1f mi</string>
+    <string name="pressure_format_second_fragment">%1$.0fmb</string>
+    <string name="confidence_format_second_fragment">%1$d%%</string>
+
+    <string name="current_details">Current details:</string>
+    <string name="other_details">Other details:</string>
+    <string name="wind">WIND</string>
+    <string name="humidity">HUMIDITY</string>
+    <string name="visibility">VISIBILITY</string>
+    <string name="pressure">PRESSURE</string>
+    <string name="confidence">CONFIDENCE</string>
+
+    <string name="sunrise">SUNRISE</string>
+    <string name="sunset">SUNSET</string>
+    <string name="time">TIME</string>
+
+    <string name="check_past_weather">Check Past Weather</string>
+</resources>
