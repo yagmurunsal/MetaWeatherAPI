@@ -1,6 +1,10 @@
 package com.ocp.casesolution.model
 
 import com.google.gson.annotations.SerializedName
+import com.ocp.casesolution.service.LocationAPI
+import com.ocp.casesolution.service.WeatherAPIService
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
@@ -36,24 +40,34 @@ data class ConsolidatedWeather(
     @SerializedName("predictability")
     val predictability: Int
 ) {
-    val formattedDegree: String
-        get() = String.format("%d°", theTemp.roundToInt())
+    fun getImageUrl(): String {
+        return LocationAPI.getImageUrl(weatherStateAbbr)
+    }
 
-    val iconUrl: String
-        get() = String.format(
-            "https://www.metaweather.com/static/img/weather/png/64/$weatherStateAbbr.png",
-            weatherStateAbbr
-        )
+    private fun formattedApplicableDate(): String = formattedApplicableDate("EEE d")
 
-    val humidityPercentage: String
-        get() = "$humidity%"
+    private fun formattedApplicableDate(pattern: String): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = dateFormat.parse(applicableDate)
+        val format = SimpleDateFormat(pattern, Locale.getDefault())
+        return format.format(date!!)
+    }
 
-    val formattedWindSpeed: String
-        get() = "${windSpeed.roundToLong()} mph"
+    private fun formattedFullApplicableDate(): String = formattedApplicableDate("EEE, dd MMM yyyy")
 
-    val formattedAirPressure: String
-        get() = "${airPressure.roundToLong()} mbar"
-
-
+    fun formattedApplicableDate(index: Int): String {
+        return when (index) {
+            0 -> {
+                "Today"
+            }
+            1 -> {
+                "Tomorrow"
+            }
+            -1 -> {
+                formattedFullApplicableDate()
+            }
+            else -> formattedApplicableDate()
+        }
+    }
 }
 

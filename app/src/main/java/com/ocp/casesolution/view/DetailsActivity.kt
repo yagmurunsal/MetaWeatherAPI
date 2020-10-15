@@ -1,30 +1,58 @@
 package com.ocp.casesolution.view
 
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.ocp.casesolution.R
-import com.ocp.casesolution.adapter.LocationInfoAdapter
-import com.ocp.casesolution.adapter.LocationSearchLatLongAdapter
-import com.ocp.casesolution.service.WeatherAPIService
+import com.ocp.casesolution.adapter.DetailsAdapter
+import com.ocp.casesolution.viewmodel.DetailsViewModel
+import com.ocp.casesolution.viewmodel.LocationSharedViewModel
 import kotlinx.android.synthetic.main.activity_details.*
-import kotlinx.android.synthetic.main.adaptericin.view.*
 
 class DetailsActivity : AppCompatActivity() {
-    private val weatherAPIService= WeatherAPIService()
-    private var locationInfoAdapter = LocationInfoAdapter(arrayListOf())
+
+    private lateinit var locationInfoViewModel: DetailsViewModel
+    private lateinit var locationSharedViewModel: LocationSharedViewModel
+    private var consolidetWeatherAdapter = DetailsAdapter(arrayListOf())
+    private lateinit var locationManager: LocationManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
         val woeid = intent.extras?.getInt("woeid")
-        locatonInfoRec.adapter=locationInfoAdapter
-
-
+        consInfo.adapter=consolidetWeatherAdapter
+        consInfo.layoutManager = LinearLayoutManager(this)
+        locationInfoViewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
+        locationSharedViewModel = ViewModelProviders.of(this).get(LocationSharedViewModel::class.java)
         if (woeid != null) {
-            weatherAPIService.getWoeid(woeid)
-
+            locationSharedViewModel.selectedLocation(woeid)
+        }
+        if (woeid != null) {
+            observeLiveData()
         }
 
     }
+    private fun observeLiveData(){
+
+        locationSharedViewModel.getLocations()
+            .observe(this, Observer { mwLocationID ->
+                locationInfoViewModel.getLocationDetails(mwLocationID)
+            })
+
+        locationInfoViewModel.getLocationInfo()
+            .observe(this, Observer { mwLocationInfo ->
+                consolidetWeatherAdapter.updateLocationList(mwLocationInfo.consolidatedWeather)
+                titleee.text= mwLocationInfo.title
+                weather_state_name.text=mwLocationInfo.consolidatedWeather[0].weatherStateName
+                Glide.with(this).load(mwLocationInfo.consolidatedWeather[0].getImageUrl()).into(state_image);
+                the_temp.text= mwLocationInfo.consolidatedWeather[0].theTemp.toString().substringBefore(".") + "°C"
+
+
+
+            })
+    }
+
 }

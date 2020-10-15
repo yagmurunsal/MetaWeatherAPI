@@ -6,9 +6,9 @@
 
     <TextView
         android:id="@+id/sunsetTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="reeccycleeerrrr"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

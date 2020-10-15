@@ -4,18 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.DetailsActivity">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/locatonInfoRec"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/constlay"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <TextView
+                android:id="@+id/titleee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New York"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-    </androidx.recyclerview.widget.RecyclerView>
+            <ImageView
+                android:id="@+id/state_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@+id/the_temp"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleee" />
+
+            <TextView
+                android:id="@+id/weather_state_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="light rain"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toBottomOf="@id/state_image"
+                app:layout_constraintStart_toStartOf="@+id/the_temp"
+                app:layout_constraintTop_toBottomOf="@+id/the_temp" />
+
+            <TextView
+                android:id="@+id/the_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="99C"
+                android:textSize="50sp"
+                app:layout_constraintBottom_toTopOf="@id/weather_state_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/state_image"
+                app:layout_constraintTop_toTopOf="@+id/state_image"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/consInfo"
+            android:layout_width="match_parent"
+            android:layout_height="522dp" />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
