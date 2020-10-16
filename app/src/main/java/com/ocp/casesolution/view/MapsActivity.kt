@@ -6,16 +6,21 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.os.Build
 import  androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,18 +29,24 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.ocp.casesolution.R
 import com.ocp.casesolution.adapter.LocationSearchLatLongAdapter
 import com.ocp.casesolution.viewmodel.MapsActivityViewModel
 import kotlinx.android.synthetic.main.activity_maps.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+    private var snackBar: Snackbar? = null
     private lateinit var viewModel: MapsActivityViewModel
     private var locationAdapter = LocationSearchLatLongAdapter(arrayListOf())
     private lateinit var mMap: GoogleMap
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
+    lateinit var intConnectivity: TextView
     lateinit var latLong : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +56,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
 
         mapFragment.getMapAsync(this)
+        intConnectivity = findViewById<TextView>(R.id.intText)
+        val cm: ConnectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val builder: NetworkRequest.Builder = NetworkRequest.Builder()
+            cm.registerNetworkCallback(
 
+                builder.build(),
+                object : ConnectivityManager.NetworkCallback() {
+
+                    override fun onAvailable(network: Network) {
+                        lifecycleScope.launch {
+                            Log.i("MapsActivity", "onAvailable!")
+
+                            // check if NetworkCapabilities has TRANSPORT_WIFI
+                            val isWifi:Boolean = cm.getNetworkCapabilities(network).hasTransport(
+                                NetworkCapabilities.TRANSPORT_WIFI)
+
+                            doSomething(true, isWifi)
+                        }
+                    }
+
+                    override fun onLost(network: Network) {
+                        lifecycleScope.launch {
+                            Log.i("MapsActivity", "onLost!")
+                            doSomething(false)
+                        }
+                    }
+                }
+            )
+        }
         viewModel = ViewModelProviders.of(this).get(MapsActivityViewModel::class.java)
         viewModel.refreshData()
         locationSearchLatLong.layoutManager = LinearLayoutManager(this)
@@ -61,13 +102,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         observeLiveData()
 
     }
-
+    private suspend fun doSomething(isConnected:Boolean, isWifi:Boolean= false){
+        withContext(Dispatchers.Main){
+            if(isConnected) {
+                intConnectivity.text = "Connected "+(if(isWifi)"WIFI" else "MOBILE")
+                intConnectivity.setBackgroundColor(-0x8333da)
+            }else {
+                intConnectivity.text = "Not Connected"
+                intConnectivity.setBackgroundColor(-0x10000)
+            }
+        }
+    }
     private fun observeLiveData() {
 
         viewModel.locations.observe(this, Observer { locations ->
             locations?.let {
                 locationSearchLatLong.visibility = View.VISIBLE
-                locationAdapter.updateLocationList(locations)
+                    locationAdapter.updateLocationList(locations)
+
+                
+
+
             }
         })
         viewModel.locationError.observe(this, Observer { error ->
@@ -161,4 +216,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+
+
 }

@@ -17,6 +17,7 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var locationInfoViewModel: DetailsViewModel
     private lateinit var locationSharedViewModel: LocationSharedViewModel
+
     private var consolidetWeatherAdapter = DetailsAdapter(arrayListOf())
     private lateinit var locationManager: LocationManager
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +40,7 @@ class DetailsActivity : AppCompatActivity() {
 
         locationSharedViewModel.getLocations()
             .observe(this, Observer { mwLocationID ->
+
                 locationInfoViewModel.getLocationDetails(mwLocationID)
             })
 
@@ -49,7 +51,12 @@ class DetailsActivity : AppCompatActivity() {
                 weather_state_name.text=mwLocationInfo.consolidatedWeather[0].weatherStateName
                 Glide.with(this).load(mwLocationInfo.consolidatedWeather[0].getImageUrl()).into(state_image);
                 the_temp.text= mwLocationInfo.consolidatedWeather[0].theTemp.toString().substringBefore(".") + "°C"
-
+                wind_val.text=mwLocationInfo.consolidatedWeather[0].windSpeed.toString().substringBefore(".")
+                humidity_val.text=mwLocationInfo.consolidatedWeather[0].humidity.toString()
+                visibility_val.text=mwLocationInfo.consolidatedWeather[0].visibility.toString().substringBefore(".")
+                pressure_val.text=mwLocationInfo.consolidatedWeather[0].airPressure.toString()
+                confidence_val.text=mwLocationInfo.consolidatedWeather[0].predictability.toString()
+                cd.text=mwLocationInfo.title
 
 
             })

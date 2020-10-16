@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.DetailsActivity">
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.DetailsActivity"
+       >
 
     <LinearLayout
         android:id="@+id/constlay"
@@ -14,7 +19,8 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/gradient_background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,11 +30,11 @@
                 android:id="@+id/titleee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New York"
                 android:textSize="32sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/WhiteSmoke"/>
 
 
             <ImageView
@@ -45,7 +51,7 @@
                 android:id="@+id/weather_state_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="light rain"
+                android:textColor="@color/WhiteSmoke"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toBottomOf="@id/state_image"
                 app:layout_constraintStart_toStartOf="@+id/the_temp"
@@ -55,7 +61,7 @@
                 android:id="@+id/the_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="99C"
+                android:textColor="@color/WhiteSmoke"
                 android:textSize="50sp"
                 app:layout_constraintBottom_toTopOf="@id/weather_state_name"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,9 +75,148 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/consInfo"
             android:layout_width="match_parent"
-            android:layout_height="522dp" />
+            android:layout_height="317dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/cd"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="@color/WhiteSmoke"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/middle"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:textColor="@color/WhiteSmoke"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cd" />
+
+            <TextView
+                android:id="@+id/wind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/wind"
+                android:textColor="@color/WhiteSmoke"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cd" />
+
+            <TextView
+                android:id="@+id/wind_val"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/WhiteSmoke"
+                app:layout_constraintStart_toStartOf="@id/wind"
+                app:layout_constraintTop_toBottomOf="@id/wind"
+                tools:text="s 9 mph" />
+
+            <TextView
+                android:id="@+id/humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/WhiteSmoke"
+                android:text="@string/humidity"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toBottomOf="@id/cd" />
+
+            <TextView
+                android:id="@+id/humidity_val"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/WhiteSmoke"
+                app:layout_constraintStart_toStartOf="@id/humidity"
+                app:layout_constraintTop_toBottomOf="@id/wind"
+                tools:text="71%" />
+
+            <TextView
+                android:id="@+id/visibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/WhiteSmoke"
+                android:text="@string/visibility"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wind_val" />
+
+            <TextView
+                android:id="@+id/visibility_val"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/WhiteSmoke"
+                app:layout_constraintStart_toStartOf="@id/visibility"
+                app:layout_constraintTop_toBottomOf="@id/visibility"
+                tools:text="13.5 miles" />
+
+            <TextView
+                android:id="@+id/pressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/pressure"
+                android:textColor="@color/WhiteSmoke"
+                app:layout_constraintStart_toStartOf="@id/middle"
+                app:layout_constraintTop_toBottomOf="@id/wind_val" />
+
+            <TextView
+                android:id="@+id/pressure_val"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/WhiteSmoke"
+               app:layout_constraintStart_toStartOf="@id/pressure"
+                app:layout_constraintTop_toBottomOf="@id/pressure"
+                tools:text="1080mb" />
+
+            <TextView
+                android:id="@+id/confidence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/WhiteSmoke"
+                android:text="@string/confidence"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/visibility_val" />
+
+            <TextView
+                android:id="@+id/confidence_val"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/WhiteSmoke"
+                app:layout_constraintStart_toStartOf="@id/confidence"
+                app:layout_constraintTop_toBottomOf="@id/confidence"
+                tools:text="1080mb" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/WhiteSmoke"
+                android:text="metaweater.com"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/confidence_val" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
