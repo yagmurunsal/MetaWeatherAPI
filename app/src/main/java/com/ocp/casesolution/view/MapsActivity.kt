@@ -102,12 +102,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         observeLiveData()
 
     }
-    private suspend fun doSomething(isConnected:Boolean, isWifi:Boolean= false){
-        withContext(Dispatchers.Main){
-            if(isConnected) {
-                intConnectivity.text = "Connected "+(if(isWifi)"WIFI" else "MOBILE")
+    private suspend fun doSomething(isConnected: Boolean, isWifi: Boolean = false) {
+        withContext(Dispatchers.Main) {
+            if (isConnected) {
+                intConnectivity.text = "Connected " + (if (isWifi) "WIFI" else "MOBILE")
                 intConnectivity.setBackgroundColor(-0x8333da)
-            }else {
+            } else {
                 intConnectivity.text = "Not Connected"
                 intConnectivity.setBackgroundColor(-0x10000)
             }

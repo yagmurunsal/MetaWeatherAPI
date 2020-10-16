@@ -26,12 +26,13 @@ class DetailsViewModel : ViewModel() {
     private var callLocationInfo: retrofit2.Call<LocationInfo>? = null
     private val locationInfo = MutableLiveData<LocationInfo>()
     private val progressBar = MutableLiveData<Boolean>()
-    private var lastMWLocationID:Int? = null
+    private var lastLocationID: Int? = null
 
 
     fun getProgressBar(): LiveData<Boolean> {
         return progressBar
     }
+
     fun getLocationInfo(): LiveData<LocationInfo> {
         return locationInfo
     }
@@ -40,7 +41,7 @@ class DetailsViewModel : ViewModel() {
         if (callLocationInfo != null) {
             callLocationInfo!!.cancel()
         }
-        if(lastMWLocationID != null && lastMWLocationID == mwLocationID){
+        if (lastLocationID != null && lastLocationID == mwLocationID) {
 
             return
         }
@@ -67,10 +68,10 @@ class DetailsViewModel : ViewModel() {
                 call: retrofit2.Call<LocationInfo>,
                 response: Response<LocationInfo>
             ) {
-                Log.d("Responsee",response.toString())
+                Log.d("Responsee", response.toString())
                 progressBar.postValue(false)
                 locationInfo.postValue(response.body())
-                lastMWLocationID = mwLocationID
+                lastLocationID = mwLocationID
             }
         })
     }

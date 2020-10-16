@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel
 
 class LocationSharedViewModel : ViewModel() {
 
-    private val mwLocationID = MutableLiveData<Int>()
+    private val locationID = MutableLiveData<Int>()
 
     fun getLocations(): LiveData<Int> {
-        return mwLocationID
+        return locationID
     }
 
     fun selectedLocation(mwLocationID: Int) {
-        this.mwLocationID.postValue(mwLocationID);
+        this.locationID.postValue(mwLocationID);
     }
 
     companion object {

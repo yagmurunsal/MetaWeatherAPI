@@ -23,11 +23,13 @@ interface LocationAPI {
                 .build()
             retrofit.create(LocationAPI::class.java)
         }
+
         fun getImageUrl(abbr: String): String {
             return "https://www.metaweather.com/" + "static/img/weather/png/" + abbr + ".png"
         }
 
     }
+
     @GET("api/location/search")
     fun searchLocationByLattLong(@Query("lattlong") lattlong: String): Single<List<LocationSearchLatLong>>
 

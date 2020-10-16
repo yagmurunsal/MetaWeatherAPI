@@ -15,7 +15,7 @@ import retrofit2.http.Path
 
 class WeatherAPIService {
 
-    private val BASE_URL ="https://www.metaweather.com/"
+    private val BASE_URL = "https://www.metaweather.com/"
     private val api = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -23,7 +23,7 @@ class WeatherAPIService {
         .build()
         .create(LocationAPI::class.java)
 
-    fun getData(lattLong : String): Single<List<LocationSearchLatLong>>{
+    fun getData(lattLong: String): Single<List<LocationSearchLatLong>> {
         return api.searchLocationByLattLong(lattLong)
     }
 
